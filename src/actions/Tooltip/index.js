@@ -1,6 +1,6 @@
 import Tooltip from "../../components/Tooltip.svelte";
 
-export function tooltip(baseElement) {
+export function tooltip(baseElement, props) {
   let title;
   let tooltipComponent;
 
@@ -13,6 +13,7 @@ export function tooltip(baseElement) {
         props: {
           title,
           baseElement,
+          position: props?.position,
         },
         target: document.body,
       });

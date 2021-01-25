@@ -3,7 +3,7 @@
 </script>
 
 <div class="app-container">
-  <div class="buttons-container">
+  <div class="buttons-container top">
     <button title="Greetings!" use:tooltip>Open tooltip</button>
     <button title="Greetings!" use:tooltip>Open tooltip</button>
     <button title="Greetings!" use:tooltip>Open tooltip</button>
@@ -15,7 +15,7 @@
     <button title="Greetings!" use:tooltip>Open tooltip</button>
   </div>
 
-  <div class="buttons-container">
+  <div class="buttons-container bottom">
     <button title="Greetings!" use:tooltip>Open tooltip</button>
     <button title="Greetings!" use:tooltip>Open tooltip</button>
     <button title="Greetings!" use:tooltip>Open tooltip</button>
@@ -36,6 +36,15 @@
 
     .buttons-container {
       @extend %app-commons;
+      padding: 60px 0;
+    }
+
+    .top {
+      padding: 0 0 50px 0;
+    }
+
+    .bottom {
+      padding: 50px 0 0 0;
     }
   }
 </style>

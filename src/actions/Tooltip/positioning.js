@@ -8,25 +8,25 @@ function getPosition(
   tooltipRect,
   position,
   padding,
-  documentRect
+  boundaryRect
 ) {
   let x, y;
-  const documentLeftBoundary = documentRect.left + 20;
-  const documentRightBoundary = documentRect.right - 20;
+  const leftBoundary = boundaryRect.left + 20;
+  const rightBoundary = boundaryRect.right - 20;
   const xAxisBasePosition =
     baseElementRect.left + baseElementRect.width / 2 - tooltipRect.width / 2;
 
   if (
-    baseElementRect.left > documentLeftBoundary &&
-    baseElementRect.right < documentRightBoundary
+    baseElementRect.left > leftBoundary &&
+    baseElementRect.right < rightBoundary
   ) {
     x = xAxisBasePosition;
   } else {
-    if (baseElementRect.left < documentLeftBoundary) {
+    if (baseElementRect.left < leftBoundary) {
       x = xAxisBasePosition + 20;
     }
 
-    if (baseElementRect.right > documentRightBoundary) {
+    if (baseElementRect.right > rightBoundary) {
       x = xAxisBasePosition - 20;
     }
   }
@@ -61,8 +61,9 @@ function shouldFlip(targetPosition, position, boundaryRect, tooltipRect) {
   }
 }
 
-function getBoundaryRect(scrollableParent) {
-  if (scrollableParent instanceof Document) {
+function getBoundaryRect(element) {
+  let parent = element.parentElement;
+  if (parent instanceof Document) {
     const width = document.body.clientWidth;
     const height = document.body.clientHeight;
 
@@ -75,10 +76,24 @@ function getBoundaryRect(scrollableParent) {
       height,
     };
   }
-  return scrollableParent.getBoundingClientRect();
+  return parent.getBoundingClientRect();
 }
 
-function placeTooltip(baseElement, tooltip, position, documentRect, padding) {
+function getTooltipArrowPlacement(tooltipRect, boundaryRect, targetPosition) {
+  // Place arrow to the left
+  if (targetPosition.x <= 20) {
+    return "LEFT";
+  }
+
+  // Place arrow to the right
+  if (boundaryRect.right - (targetPosition.x + tooltipRect.width) <= 20) {
+    return "RIGHT";
+  }
+  // Place arrow to the center
+  return "CENTER";
+}
+
+function placeTooltip(baseElement, tooltip, position, boundaryRect, padding) {
   const baseElementRect = baseElement.getBoundingClientRect();
   const tooltipRect = tooltip.getBoundingClientRect();
 
@@ -87,21 +102,23 @@ function placeTooltip(baseElement, tooltip, position, documentRect, padding) {
     tooltipRect,
     position,
     padding,
-    documentRect
+    boundaryRect
   );
 
-  if (shouldFlip(targetPosition, position, documentRect, tooltipRect)) {
+  if (shouldFlip(targetPosition, position, boundaryRect, tooltipRect)) {
     position = getOppositePosition(position);
     targetPosition = getPosition(
       baseElementRect,
       tooltipRect,
       position,
       padding,
-      documentRect
+      boundaryRect
     );
   }
-
+  //Place the tooltip in screen
   tooltip.style.transform = `translate(${targetPosition.x}px, ${targetPosition.y}px)`;
+  //Return tooltip position
+  return { targetPosition, tooltipRect, calcPosition: position };
 }
 
 function createTooltip(baseElement, tooltip, position, padding = 0) {
@@ -115,9 +132,26 @@ function createTooltip(baseElement, tooltip, position, padding = 0) {
     throw new Error("Please select a valid positioning parameter.");
   }
 
-  const documentRect = getBoundaryRect(document);
+  const boundaryRect = getBoundaryRect(baseElement);
 
-  placeTooltip(baseElement, tooltip, position, documentRect, padding);
+  const { targetPosition, tooltipRect, calcPosition } = placeTooltip(
+    baseElement,
+    tooltip,
+    position,
+    boundaryRect,
+    padding
+  );
+
+  const arrowPlacement = getTooltipArrowPlacement(
+    tooltipRect,
+    boundaryRect,
+    targetPosition
+  );
+
+  return {
+    calcArrowPlacementX: arrowPlacement,
+    calcArrowPlacementY: calcPosition,
+  };
 }
 
 export default POSITION;
