@@ -77,12 +77,14 @@ export default {
     babel({
       extensions: [".js", ".mjs", ".html", ".svelte"],
       runtimeHelpers: true,
-      exclude: ["node_modules/@babel/**"],
+      exclude: ["node_modules/@babel/**", "node_modules/core-js/**"],
       presets: [
         [
           "@babel/preset-env",
           {
             targets: "> 0.25%, not dead, IE 11",
+            useBuiltIns: "usage",
+            corejs: 3,
           },
         ],
       ],
