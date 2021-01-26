@@ -13,7 +13,7 @@ export function tooltip(baseElement, props) {
         props: {
           title,
           baseElement,
-          position: props?.position,
+          position: props && props.position,
         },
         target: document.body,
       });
