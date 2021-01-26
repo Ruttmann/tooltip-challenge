@@ -12,6 +12,7 @@
 
   let arrowPlacementX = "CENTER";
   let arrowPlacementY = "BOTTOM";
+  let fade = "0";
 
   onMount(() => {
     const { calcArrowPlacementX, calcArrowPlacementY } = createTooltip(
@@ -23,10 +24,11 @@
 
     arrowPlacementX = calcArrowPlacementX;
     arrowPlacementY = calcArrowPlacementY === "TOP" ? "BOTTOM" : "TOP";
+    fade = "1";
   });
 </script>
 
-<div bind:this={tooltip}>
+<div data-fade={fade} bind:this={tooltip}>
   {title}
   <svg
     data-arrow-x={arrowPlacementX}
@@ -55,8 +57,14 @@
     box-shadow: 2px 2px 2px #777;
     border-radius: 4px;
     padding: 10px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
     top: 0;
     left: 0;
+
+    &[data-fade="1"] {
+      opacity: 1;
+    }
     svg {
       position: absolute;
       top: 100%;
