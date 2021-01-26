@@ -12,7 +12,7 @@
 - Legacy browser support: IE11+, iOS 10+;
 - Linting with **Svelte for VSCode** extension (no need to configure eslint, prettier, etc.);
 - Basic accessibility features.
-- Fixed parent element boundary padding fixed in 20px;
+- Parent element boundary padding fixed in 20px;
 - Adherent to those [specs](https://github.com/shirotech/code-test).
 
 ## How to place a tooltip
