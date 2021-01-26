@@ -4,8 +4,8 @@ import resolve from "@rollup/plugin-node-resolve";
 import livereload from "rollup-plugin-livereload";
 import { terser } from "rollup-plugin-terser";
 import css from "rollup-plugin-css-only";
-import buble from "rollup-plugin-buble";
 import preprocess from "svelte-preprocess";
+import babel from "rollup-plugin-babel";
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -73,8 +73,31 @@ export default {
     // browser on changes when not in production
     !production && livereload("public"),
 
-    //Compile to IE11 compatible ES5
-    buble({ transforms: { forOf: false } }),
+    // compile to good old IE11 compatible ES5
+    babel({
+      extensions: [".js", ".mjs", ".html", ".svelte"],
+      runtimeHelpers: true,
+      exclude: ["node_modules/@babel/**", "node_modules/core-js/**"],
+      presets: [
+        [
+          "@babel/preset-env",
+          {
+            targets: "> 0.25%, not dead, IE 11",
+            useBuiltIns: "usage",
+            corejs: 3,
+          },
+        ],
+      ],
+      plugins: [
+        "@babel/plugin-syntax-dynamic-import",
+        [
+          "@babel/plugin-transform-runtime",
+          {
+            useESModules: true,
+          },
+        ],
+      ],
+    }),
 
     // If we're building for production (npm run build
     // instead of npm run dev), minify
