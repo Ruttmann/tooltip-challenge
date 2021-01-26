@@ -5,6 +5,7 @@ import livereload from "rollup-plugin-livereload";
 import { terser } from "rollup-plugin-terser";
 import css from "rollup-plugin-css-only";
 import preprocess from "svelte-preprocess";
+import babel from "rollup-plugin-babel";
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -71,6 +72,30 @@ export default {
     // Watch the `public` directory and refresh the
     // browser on changes when not in production
     !production && livereload("public"),
+
+    // compile to good old IE11 compatible ES5
+    babel({
+      extensions: [".js", ".mjs", ".html", ".svelte"],
+      runtimeHelpers: true,
+      exclude: ["node_modules/@babel/**"],
+      presets: [
+        [
+          "@babel/preset-env",
+          {
+            targets: "> 0.25%, not dead, IE 11",
+          },
+        ],
+      ],
+      plugins: [
+        "@babel/plugin-syntax-dynamic-import",
+        [
+          "@babel/plugin-transform-runtime",
+          {
+            useESModules: true,
+          },
+        ],
+      ],
+    }),
 
     // If we're building for production (npm run build
     // instead of npm run dev), minify
