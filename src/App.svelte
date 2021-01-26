@@ -4,21 +4,39 @@
 
 <div class="app-container">
   <div class="buttons-container top">
-    <button title="Greetings!" use:tooltip>Open tooltip</button>
-    <button title="Greetings!" use:tooltip>Open tooltip</button>
-    <button title="Greetings!" use:tooltip>Open tooltip</button>
+    <button aria-describedby="tooltip" title="Greetings!" use:tooltip
+      >Open tooltip</button
+    >
+    <button aria-describedby="tooltip" title="Greetings!" use:tooltip
+      >Open tooltip</button
+    >
+    <button aria-describedby="tooltip" title="Greetings!" use:tooltip
+      >Open tooltip</button
+    >
   </div>
 
   <div class="buttons-container">
-    <button title="Greetings!" use:tooltip>Open tooltip</button>
-    <button title="Greetings!" use:tooltip>Open tooltip</button>
-    <button title="Greetings!" use:tooltip>Open tooltip</button>
+    <button aria-describedby="tooltip" title="Greetings!" use:tooltip
+      >Open tooltip</button
+    >
+    <button aria-describedby="tooltip" title="Greetings!" use:tooltip
+      >Open tooltip</button
+    >
+    <button aria-describedby="tooltip" title="Greetings!" use:tooltip
+      >Open tooltip</button
+    >
   </div>
 
   <div class="buttons-container bottom">
-    <button title="Greetings!" use:tooltip>Open tooltip</button>
-    <button title="Greetings!" use:tooltip>Open tooltip</button>
-    <button title="Greetings!" use:tooltip>Open tooltip</button>
+    <button aria-describedby="tooltip" title="Greetings!" use:tooltip
+      >Open tooltip</button
+    >
+    <button aria-describedby="tooltip" title="Greetings!" use:tooltip
+      >Open tooltip</button
+    >
+    <button aria-describedby="tooltip" title="Greetings!" use:tooltip
+      >Open tooltip</button
+    >
   </div>
 </div>
 

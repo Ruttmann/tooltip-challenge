@@ -28,7 +28,7 @@
   });
 </script>
 
-<div data-fade={fade} bind:this={tooltip}>
+<div data-fade={fade} bind:this={tooltip} role="tooltip" id="tooltip">
   {title}
   <svg
     data-arrow-x={arrowPlacementX}
