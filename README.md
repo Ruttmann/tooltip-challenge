@@ -1,4 +1,4 @@
-# Convincely Tooltip Challenge
+# Tooltip Implementation
 
 <p align="center">
   <a href="https://tooltip-challenge.netlify.app/" target="_blank">
